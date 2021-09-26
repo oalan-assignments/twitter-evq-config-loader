@@ -28,6 +28,7 @@ Key requirements:
   loadConfig(). Once the object is returned, however, it is not permissible to exit or
   crash no matter what the query is. **Returning an empty value is acceptable, however.**
   * We can perform a very simple check and continue, log the errors and return None for errornous lines to avoid load time full parsing and checking to speed up load time.
+* Every line can have comment: **Hence it is required to hadle them and get the content properly**
 
 Key assumptions:
 * Configs are static and does not change dynamically
@@ -74,6 +75,8 @@ Key assumptions:
 
 ### Future Work/Discussion
 
+* No dependency Injection but created contracts and concrete implementations. Can be easily implemented once there are more than one implementations
+* 
 * Distributing workers with actors (akka-remote/akka-cluster)
 * Handle duplicate groups and keys
 * Use bloom filter for faster response 
@@ -86,3 +89,4 @@ Key assumptions:
 * **Worker nodes could potentially continue parsing the values after first split of lines (using = split)** 
   * We can not do arbitrary slicing because we would lose group information
   * So we need to keep track of group info. One option would be prepending the group into property at the time of slicing. We would need to do a profiling though if this approach is better than (because it requires a process to split file still) main actor sending lines to the actors. 
+* Make clear separation between IT and UT
