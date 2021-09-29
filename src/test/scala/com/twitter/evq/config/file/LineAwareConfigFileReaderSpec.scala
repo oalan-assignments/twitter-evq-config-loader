@@ -1,11 +1,11 @@
 package com.twitter.evq.config.file
 
-import com.twitter.evq.config.Config.{BlankLine, CommentOnlyLine, GroupLine, PropertyLine}
+import com.twitter.evq.config.file.ConfigFile.{BlankLine, CommentOnlyLine, GroupLine, PropertyLine}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import com.twitter.evq.config.file.{LineAwareConfigFileReader => LineAwareReader}
 
-class ConfigFileReaderSpec extends AnyFlatSpec with Matchers {
+class LineAwareConfigFileReaderSpec extends AnyFlatSpec with Matchers {
 
   "Lines" should "be mapped to their specific types" in {
 

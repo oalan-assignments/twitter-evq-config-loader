@@ -1,6 +1,6 @@
 package com.twitter.evq.config.file
 
-import com.twitter.evq.config.Config._
+import com.twitter.evq.config.file.ConfigFile.{BlankLine, CommentOnlyLine, GroupLine, Line, PropertyLine}
 import com.twitter.evq.config.file.LineAwareConfigFileReader.getTypedLine
 
 import scala.io.BufferedSource
@@ -24,7 +24,6 @@ protected[file] class LineAwareConfigFileReader(path: String) extends ConfigFile
   }
 
   def close(): Unit = source.close()
-
 }
 
 protected[file] object LineAwareConfigFileReader {

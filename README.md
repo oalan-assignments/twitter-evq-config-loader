@@ -71,7 +71,7 @@ Key assumptions:
 #### Domain Model, Contracts and Class Collaborations
 
 **Discuss separations and interfaces**
-**Discuss extesnbility**s
+**Discuss extensibility**
 
 ### Future Work/Discussion
 
@@ -90,3 +90,7 @@ Key assumptions:
   * We can not do arbitrary slicing because we would lose group information
   * So we need to keep track of group info. One option would be prepending the group into property at the time of slicing. We would need to do a profiling though if this approach is better than (because it requires a process to split file still) main actor sending lines to the actors. 
 * Make clear separation between IT and UT
+* More unhappy path tests. E.g:
+  * ???
+* Add more value decoders:
+  * Array[Int], Array[Double] etc
