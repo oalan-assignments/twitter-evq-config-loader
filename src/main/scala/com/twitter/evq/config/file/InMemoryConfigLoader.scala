@@ -7,20 +7,19 @@ import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.mutable
 
-protected[file] object InMemoryConfigLoader extends Loader {
+protected[file] class InMemoryConfigLoader(system: ActorSystem) extends Loader {
 
-  private val logger: Logger = LoggerFactory.getLogger(InMemoryConfigLoader.getClass)
+  private val logger: Logger = LoggerFactory.getLogger(this.getClass)
   var currentActor: ActorRef = _
 
   override def loadConfig(path: String, overrides: List[String]): Repository = {
     val lookup: mutable.Map[String, ActorRef] = mutable.Map.empty
-    val system = ActorSystem("ConfigSystem")
-    val reader = ConfigFileFactories.getReader(path)
+    val reader = ConfigFileFactories.getReader(this, path)
     var currentGroup = ""
     //TODO: Consider creating actors per given threshold of lines (e.g 1000) to balance actors workload.
     // Then the return object (Repository) would hold map of group name to List of actor references.
     // This could be done with different Loader -> Configs implementation using factory methods...
-    while (reader.hasLine()) {
+    while (reader.hasLine) {
       reader.nextLine() match {
         case GroupLine(groupName) =>
           currentGroup = groupName
@@ -34,7 +33,8 @@ protected[file] object InMemoryConfigLoader extends Loader {
       }
     }
     reader.close()
-    ConfigFileFactories.toConfigs(this, lookup.toMap)
+    ConfigFileFactories.toConfigs(this, lookup.toMap, system)
+
   }
 }
 

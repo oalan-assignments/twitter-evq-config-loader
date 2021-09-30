@@ -16,7 +16,7 @@ object UntypedConfigExtractor {
     } match {
       case Success(result) => Some(result)
       case Failure(exception) =>
-        logger.error(s"Config line '${line}' is invalid. Reason: ${exception.getClass}")
+        logger.error(s"Config line '$line' is invalid. Reason: ${exception.getClass}")
         None
     }
     result match {

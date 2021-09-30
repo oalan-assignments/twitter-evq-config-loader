@@ -12,9 +12,9 @@ object InMemoryConfigGroupNode {
   private val logger: Logger = LoggerFactory.getLogger(this.getClass)
 
   private[common] def processLine(line: String,
-                                  currentData: mutable.Map[String, PropertyData],
+                                  currentData: mutable.AbstractMap[String, PropertyData],
                                   groupName: String,
-                                  overrides: List[String]) = {
+                                  overrides: List[String]): Unit = {
     val newConfig = UntypedConfigExtractor.extractConfigInfo(line)
     newConfig match {
       case Some(newConfig) =>
@@ -31,8 +31,8 @@ object InMemoryConfigGroupNode {
 
   private[common] def resolveOverrides(newConfig: PropertyData,
                                        oldVersion: PropertyData,
-                                       currentData: mutable.Map[String, PropertyData],
-                                       overrides: List[String]) = {
+                                       currentData: mutable.AbstractMap[String, PropertyData],
+                                       overrides: List[String]): Unit = {
     newConfig.overrideVal.foreach { overrideVal =>
       if (overrides.contains(overrideVal)) {
         currentData.put(newConfig.key, newConfig)
@@ -44,7 +44,7 @@ object InMemoryConfigGroupNode {
 
 class InMemoryConfigGroupNode(groupName: String,
                               overrides: List[String],
-                              data: mutable.Map[String, PropertyData]) extends Actor {
+                              data: mutable.AbstractMap[String, PropertyData]) extends Actor {
 
 
   private val logger: Logger = LoggerFactory.getLogger(this.getClass)

@@ -10,7 +10,7 @@ object ConfigFile {
 
   trait Reader {
 
-    def hasLine(): Boolean
+    def hasLine: Boolean
 
     def nextLine(): Line
 

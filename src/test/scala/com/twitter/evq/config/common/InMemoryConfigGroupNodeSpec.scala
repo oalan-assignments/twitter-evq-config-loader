@@ -14,13 +14,13 @@ import scala.collection.mutable
 class InMemoryConfigGroupNodeSpec extends AnyFlatSpec with Matchers {
 
   "Processing a line" should "yield an entry in given lookup" in {
-    val currentData: mutable.Map[String, PropertyData] = mutable.Map.empty
+    val currentData: mutable.AbstractMap[String, PropertyData] = mutable.HashMap.empty
     InMemoryConfigGroupNode.processLine("path = /tmp/", currentData, "test", List("override"))
     currentData.get("path") shouldBe Option(PropertyData("path", "/tmp/", None))
   }
 
   "While processing a line, if the line has an override that is listed in given overrides, then it" should "override" in {
-    val currentData: mutable.Map[String, PropertyData] = mutable.Map.newBuilder.result()
+    val currentData: mutable.AbstractMap[String, PropertyData] = mutable.HashMap.newBuilder.result()
     currentData += ("path" -> PropertyData("path", "/srv/var/tmp", Some("production")))
     InMemoryConfigGroupNode.processLine("path<ubuntu> = /etc/var/uploads",
       currentData, "test", List("ubuntu", "production"))
@@ -28,7 +28,7 @@ class InMemoryConfigGroupNodeSpec extends AnyFlatSpec with Matchers {
   }
 
   "While processing a line, if the line has an override that is NOT listed in given overrides, then it" should "NOT override" in {
-    val currentData: mutable.Map[String, PropertyData] = mutable.Map.newBuilder.result()
+    val currentData: mutable.AbstractMap[String, PropertyData] = mutable.HashMap.newBuilder.result()
     val extract = PropertyData("path", "/srv/var/tmp", Some("production"))
     currentData += ("path" -> extract)
     InMemoryConfigGroupNode.processLine("path<ubuntu> = /etc/var/uploads",
@@ -39,9 +39,9 @@ class InMemoryConfigGroupNodeSpec extends AnyFlatSpec with Matchers {
   "Interactions with config node actor" should "work as expected" in {
     import akka.testkit.TestActorRef
     implicit lazy val system: ActorSystem = ActorSystem()
-    implicit val timeout = Timeout(5, TimeUnit.SECONDS)
+    implicit val timeout: Timeout = Timeout(5, TimeUnit.SECONDS)
     val actorRef = TestActorRef(new InMemoryConfigGroupNode("test",
-      List(""), mutable.Map.empty))
+      List(""), mutable.HashMap.empty))
     actorRef ! ProcessLine("path = /tmp/")
     val queryFuture = actorRef ? QueryConfig("path")
     queryFuture.futureValue shouldBe Some("/tmp/")

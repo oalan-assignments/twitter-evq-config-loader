@@ -28,10 +28,10 @@ object ValueDecoders {
     } match {
       case Success(value) => Some(value)
       case Failure(exception) => exception match {
-        case e: NumberFormatException =>
-          logger.error(s"Value '$value' is not a valid ${typeStr}")
+        case _: NumberFormatException =>
+          logger.error(s"Value '$value' is not a valid $typeStr")
           None
-        case e: Exception => print("An unexpected error occurred while fetching value")
+        case _: Exception => print("An unexpected error occurred while fetching value")
           None
       }
     }
