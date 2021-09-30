@@ -1,12 +1,12 @@
 package com.twitter.evq.config.file
 
-import com.twitter.evq.config.file.ConfigFile.{BlankLine, CommentOnlyLine, GroupLine, Line, PropertyLine}
+import com.twitter.evq.config.file.ConfigFile.{BlankLine, CommentOnlyLine, GroupLine, Line, PropertyLine, Reader}
 import com.twitter.evq.config.file.LineAwareConfigFileReader.getTypedLine
 
 import scala.io.BufferedSource
 import scala.util.{Failure, Success, Try}
 
-protected[file] class LineAwareConfigFileReader(path: String) extends ConfigFile.Reader {
+protected[file] class LineAwareConfigFileReader(path: String) extends Reader {
 
   val source: BufferedSource = Try {
     scala.io.Source.fromFile(path)

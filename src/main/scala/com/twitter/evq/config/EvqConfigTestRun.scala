@@ -1,6 +1,6 @@
 package com.twitter.evq.config
 
-import com.twitter.evq.config.file.ConfigFile
+import com.twitter.evq.config.file.{ConfigFile, ConfigFileFactories}
 import com.twitter.evq.config.common.Config.Group
 
 object EvqConfigTestRun extends App {
@@ -8,7 +8,7 @@ object EvqConfigTestRun extends App {
   import com.twitter.evq.config.query.ValueDecoders._
 
   val filePath: String = (os.pwd / "src" / "test" / "resources" / "sample.conf").toString()
-  val config = ConfigFile.getLoader().loadConfig(filePath, List("ubuntu", "production"))
+  val config = ConfigFileFactories.getLoader().loadConfig(filePath, List("ubuntu", "production"))
 
   val paid_users_size_limit: Option[Long] = config.get("common").flatMap(_.get[Long]("paid_users_size_limit"))
   println(s"common:paid_users_size_limit: ${paid_users_size_limit}")

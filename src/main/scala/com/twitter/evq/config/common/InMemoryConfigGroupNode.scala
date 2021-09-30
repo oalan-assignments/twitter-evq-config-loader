@@ -1,7 +1,7 @@
 package com.twitter.evq.config.common
 
 import akka.actor.Actor
-import com.twitter.evq.config.common.Config.{Extract, ListMappings, ProcessLine, QueryConfig}
+import com.twitter.evq.config.common.Config.{PropertyData, ListMappings, ProcessLine, QueryConfig}
 import com.twitter.evq.config.common.InMemoryConfigGroupNode.processLine
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -12,7 +12,7 @@ object InMemoryConfigGroupNode {
   private val logger: Logger = LoggerFactory.getLogger(this.getClass)
 
   private[common] def processLine(line: String,
-                                  currentData: mutable.Map[String, Extract],
+                                  currentData: mutable.Map[String, PropertyData],
                                   groupName: String,
                                   overrides: List[String]) = {
     val newConfig = UntypedConfigExtractor.extractConfigInfo(line)
@@ -29,9 +29,9 @@ object InMemoryConfigGroupNode {
     }
   }
 
-  private[common] def resolveOverrides(newConfig: Extract,
-                                       oldVersion: Extract,
-                                       currentData: mutable.Map[String, Extract],
+  private[common] def resolveOverrides(newConfig: PropertyData,
+                                       oldVersion: PropertyData,
+                                       currentData: mutable.Map[String, PropertyData],
                                        overrides: List[String]) = {
     newConfig.overrideVal.foreach { overrideVal =>
       if (overrides.contains(overrideVal)) {
@@ -44,7 +44,7 @@ object InMemoryConfigGroupNode {
 
 class InMemoryConfigGroupNode(groupName: String,
                               overrides: List[String],
-                              data: mutable.Map[String, Extract]) extends Actor {
+                              data: mutable.Map[String, PropertyData]) extends Actor {
 
 
   private val logger: Logger = LoggerFactory.getLogger(this.getClass)

@@ -1,8 +1,11 @@
+* Dummy (bos) DiskBasedConfigGroupNode
 * Refactor and test (Comment and Blank Line'i irrelavanta cevirmeyi dusun) - Name better!
 * InMemoryConfigGroupCoordinator(group: ActorRef) delete!!!
 * Finish readme!
 
 * **Query'de timeout yerine mailboxuna bakarak in progress vs diyebilir miyim** (Timeoutu handle et)
+
+
 * LRU cachei yaz
 ```
   //TODO: Consider using cache

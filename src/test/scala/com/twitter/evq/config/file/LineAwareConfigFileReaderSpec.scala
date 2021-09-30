@@ -22,7 +22,7 @@ class LineAwareConfigFileReaderSpec extends AnyFlatSpec with Matchers {
 
   "Reader" should "be able to read line by line from a config file" in {
     val configFilePath = os.pwd/"src"/"test"/"resources"/"sample.conf"
-    val reader = ConfigFile.getReader(configFilePath.toString())
+    val reader = ConfigFileFactories.getReader(configFilePath.toString())
     reader.hasLine() shouldBe true
     reader.nextLine() shouldBe CommentOnlyLine("; This is the config file format your code should accept.")
     reader.nextLine() shouldBe BlankLine()
@@ -33,7 +33,7 @@ class LineAwareConfigFileReaderSpec extends AnyFlatSpec with Matchers {
 
   "Reader" should "throw RuntimeException in case no file could be read" in {
     val thrown = intercept[ConfigFile.CouldNotBeReadException] {
-      ConfigFile.getReader("foobar")
+      ConfigFileFactories.getReader("foobar")
     }
     thrown.getMessage shouldBe  "Error while accessing config file"
   }

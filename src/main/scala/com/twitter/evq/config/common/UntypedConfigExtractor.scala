@@ -1,6 +1,6 @@
 package com.twitter.evq.config.common
 
-import com.twitter.evq.config.common.Config.Extract
+import com.twitter.evq.config.common.Config.PropertyData
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.util.{Failure, Success, Try}
@@ -9,7 +9,7 @@ object UntypedConfigExtractor {
 
   private val logger: Logger = LoggerFactory.getLogger(UntypedConfigExtractor.getClass)
 
-  def extractConfigInfo(line: String): Option[Extract] = {
+  def extractConfigInfo(line: String): Option[PropertyData] = {
     val result = Try {
       val Array(keyFragment, valueFragment) = line.split("=")
       (keyFragment, valueFragment)
@@ -26,7 +26,7 @@ object UntypedConfigExtractor {
         val overrideVal = if (splittedKeyFragment.size == 2)
           Some(splittedKeyFragment(1).replace(">", "").trim) else None
         val value = valueFragment.split(";")(0).trim
-        Some(Extract(key, value, overrideVal))
+        Some(PropertyData(key, value, overrideVal))
       case None => None
     }
   }

@@ -4,17 +4,8 @@ import com.twitter.evq.config.common.Config.Repository
 
 object ConfigFile {
 
-  // Static factories
-  def getReader(path: String): Reader = {
-    new LineAwareConfigFileReader(path)
-  }
-
   trait Loader {
     def loadConfig(path: String, overrides: List[String]): Repository
-  }
-
-  def getLoader(): Loader = {
-    InMemoryConfigLoader
   }
 
   trait Reader {

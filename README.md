@@ -94,3 +94,4 @@ Key assumptions:
   * ???
 * Add more value decoders:
   * Array[Int], Array[Double] etc
+* Parameterized (reading from configs) constants, e.g. timeout values

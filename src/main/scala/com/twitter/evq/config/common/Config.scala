@@ -2,10 +2,6 @@ package com.twitter.evq.config.common
 
 object Config {
 
-  final case class QueryConfig(key: String)
-
-  final object ListMappings
-
   trait Decoder[T] {
     def decode(d: String): Option[T]
   }
@@ -20,8 +16,10 @@ object Config {
     def get(group: String): Option[Group]
   }
 
-  case class Extract(key: String, value: String, overrideVal: Option[String])
+  case class PropertyData(key: String, value: String, overrideVal: Option[String])
 
   // Messages for actors
   case class ProcessLine(line: String)
+  final case class QueryConfig(key: String)
+  final object ListMappings
 }
